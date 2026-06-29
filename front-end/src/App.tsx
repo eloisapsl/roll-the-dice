@@ -13,6 +13,7 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import "./App.css";
 
+// tipos do typescript para gerenciar os estados da aplicação
 type diceConfig = {
   diceType: string;
   img: string;
@@ -24,6 +25,8 @@ type rolling = {
   timestamp: string;
 };
 
+
+// essa lista existe pra renderizar nossos dados de forma dinamica 
 const dices = [
   { diceType: "D2", img: d2png },
   { diceType: "D4", img: d4png },
@@ -45,15 +48,17 @@ export default function App() {
     setResult(null); // limpa o result ao trocar de dado
   };
 
+  // função pra limpar o histórico de rolagens
   const cleanHistory = () => {
     setHistory([]);
   };
 
+  // o coração dessa página: aqui acontece a comunicação com o back-end via nossos services do front-end
   const handleRoll = async () => {
     setloading(true);
     try {
       const data = await rollDice(selectedDice.diceType);
-      console.log(data);
+      //console.log(data);
 
       setResult(data.result);
       setHistory((prev) => [

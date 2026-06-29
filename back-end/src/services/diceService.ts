@@ -1,6 +1,7 @@
 
 
-// Determina o tipo de objeto recebido pela função "rollDice"
+// Determina o tipo de objeto recebido pela função "rollDice", 
+// é como um contrato que estabelecemos entre o front e o back sobre o tipo de dado recebido
 interface rollDiceDTO {
   diceType: string;
 }
@@ -15,6 +16,7 @@ const diceService = {
 
     const result = Math.floor(Math.random() * sidesNumber) + 1;
 
+    // após a logica, retornamos um objeto para o controller manipular esse retorno
     return {
         chosenDiceType: chosenDiceType,
         result: result,

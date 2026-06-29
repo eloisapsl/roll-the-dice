@@ -1,5 +1,8 @@
 import "./styles.css";
 
+
+// esse componente é utilizado para renderizar dinamicamente as imagens de cada dado 
+// e dizer pra nossa aplicação qual dado está selecionado via props!
 type diceProps = {
   diceType: string;
   img: string;

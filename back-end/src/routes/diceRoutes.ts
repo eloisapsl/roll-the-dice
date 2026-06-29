@@ -13,7 +13,7 @@ const diceTypesValidator = [
     .withMessage('Tipo de dado inválido.')
 ];
 
-
+// define a rota e o método a ser usado na nossa requisição
 router.post('/roll', diceTypesValidator, diceController.rollDice);
 
 export default router;

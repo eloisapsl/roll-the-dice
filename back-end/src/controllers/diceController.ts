@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 import diceService from '../services/diceService';
 
-// controla as requisições que chegam no nosso back-end
+// controla as requisições que chegam pro nosso back-end e retornam os status correspondentes ao processamento
 const diceController = {
      rollDice(req: Request, res: Response, next: NextFunction)
     {
@@ -15,7 +15,8 @@ const diceController = {
             return res.status(400).json({message: "Dado inválido. Escolha outro dado."});
         }
         
-
+        // aqui preferi criar um serviço para controlar a lógica de calculo do dado,
+        // pois ela pode mudar caso a aplicação cresça
         const result =  diceService.rollDice(req.body);
 
         return res.status(200).json(result);

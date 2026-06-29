@@ -1,0 +1,15 @@
+.diceContainer {
+    width:300px;
+    height:300px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+.diceImg {
+    width:300px;
+    object-fit: contain;
+    height:auto;
+}
+
+

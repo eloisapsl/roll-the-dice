@@ -1,122 +1,123 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from "react";
+import { Dice } from "./components/dice/dice";
+import d2png from "./assets/D2.png";
+import d4png from "./assets/D4.png";
+import d6png from "./assets/D6.png";
+import d8png from "./assets/D8.png";
+import d10png from "./assets/D10.png";
+import d12png from "./assets/D12.png";
+import d20png from "./assets/D20.png";
+import DirLogo from "./assets/DirLogo2.png";
+import { rollDice } from "./services/api";
+import Container from "react-bootstrap/Container";
+import Navbar from "react-bootstrap/Navbar";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+type diceConfig = {
+  diceType: string;
+  img: string;
+};
+
+type rolling = {
+  diceType: string;
+  result: number;
+  timestamp: string;
+};
+
+const dices = [
+  { diceType: "D2", img: d2png },
+  { diceType: "D4", img: d4png },
+  { diceType: "D6", img: d6png },
+  { diceType: "D8", img: d8png },
+  { diceType: "D10", img: d10png },
+  { diceType: "D12", img: d12png },
+  { diceType: "D20", img: d20png },
+];
+
+export default function App() {
+  const [selectedDice, setSelectedDice] = useState<diceConfig>(dices[0]);
+  const [result, setResult] = useState<number | null>(null);
+  const [history, setHistory] = useState<rolling[]>([]);
+  const [loading, setloading] = useState(false);
+
+  const handleSelectDice = (dice: diceConfig) => {
+    setSelectedDice(dice);
+    setResult(null); // limpa o result ao trocar de dado
+  };
+
+  const cleanHistory = () => {
+    setHistory([]);
+  };
+
+  const handleRoll = async () => {
+    setloading(true);
+    try {
+      const data = await rollDice(selectedDice.diceType);
+      console.log(data);
+
+      setResult(data.result);
+      setHistory((prev) => [
+        ...prev,
+        {
+          diceType: selectedDice.diceType,
+          result: data.result,
+          timestamp: new Date().toLocaleString("pt-BR"),
+        },
+      ]);
+    } finally {
+      setloading(false);
+    }
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="mainContainer">
+      <Navbar className="navbar">
+        <Container fluid className="navbarContent">
+          <Navbar.Brand href="https://directy.com.br" className="logoContainer">
+            <img src={DirLogo} className="logo-directy" alt="Directy Logo" />
+          </Navbar.Brand>
 
-      <div className="ticks"></div>
+          <h3 className="navbarTitle">ROLL THE DICE</h3>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+          <div className="navbarSpacer"></div>
+        </Container>
+      </Navbar>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <div className="buttonsList">
+        {dices.map((d) => (
+          <button key={d.diceType} onClick={() => handleSelectDice(d)}>
+            {d.diceType}
+          </button>
+        ))}
+      </div>
+
+      <div className="diceRollGame">
+        <Dice diceType={selectedDice.diceType} img={selectedDice.img} />
+
+        <div className="resultContainer">
+          <p className="resultText">{result ?? " "}</p>
+          <button className="resultButton" onClick={handleRoll}>
+            Rolar {selectedDice.diceType}
+          </button>
+        </div>
+
+        <div className="historyContainer">
+          <p>Histórico</p>
+          <div className="historyList">
+            {history.map((r, i) => (
+              <p key={i}>
+                {r.diceType}: {r.result} — {r.timestamp}
+              </p>
+            ))}
+          </div>
+
+          <button onClick={() => cleanHistory()}>Limpar</button>
+        </div>
+
+      </div>
+
+      <footer>Developed by Eloisa Pajehu</footer>
+
+    </div>
+  );
 }
-
-export default App

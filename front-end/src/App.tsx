@@ -95,6 +95,7 @@ export default function App() {
         <Dice diceType={selectedDice.diceType} img={selectedDice.img} />
 
         <div className="resultContainer">
+          <p>Resultado</p>
           <p className="resultText">{result ?? " "}</p>
           <button className="resultButton" onClick={handleRoll}>
             Rolar {selectedDice.diceType}
@@ -113,11 +114,11 @@ export default function App() {
 
           <button onClick={() => cleanHistory()}>Limpar</button>
         </div>
-
       </div>
 
-      <footer>Developed by Eloisa Pajehu</footer>
-
+      <div className="footer">
+        <p className="footerText">Developed by Eloisa Pajehu</p>
+      </div>
     </div>
   );
 }

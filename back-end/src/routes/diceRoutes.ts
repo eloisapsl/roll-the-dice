@@ -9,7 +9,7 @@ const router = Router();
 ** (um colega dev usou isso em um projeto da faculdade e achei bacana) */
 const diceTypesValidator = [
   body('diceType')
-    .isIn(["D2", "D4", "D6", "D8", "D10", "D12", "D20", "D100"])
+    .isIn(["D2", "D4", "D6", "D8", "D10", "D12", "D20"])
     .withMessage('Tipo de dado inválido.')
 ];
 

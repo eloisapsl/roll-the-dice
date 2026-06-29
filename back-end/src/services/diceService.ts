@@ -15,12 +15,9 @@ const diceService = {
 
     const result = Math.floor(Math.random() * sidesNumber) + 1;
 
-    const currentDate = new Date().toISOString();
-
     return {
         chosenDiceType: chosenDiceType,
         result: result,
-        timestamp: currentDate
     }
 
   },

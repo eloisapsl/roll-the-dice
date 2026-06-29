@@ -186,5 +186,5 @@ Partindo disso, busquei manter a coerencia entre as camadas e a simplicidade no 
 - [Using TypeScript](https://react.dev/learn/typescript#typescript-with-react-components)
 - [Tudo sobre Flexbox: Entendendo o Layout Flexível em CSS](https://www.dio.me/articles/tudo-sobre-flexbox-entendendo-o-layout-flexivel-em-css)
 - [HTTP GET vs POST: Entenda a diferença e quando usar cada método](https://www.alura.com.br/artigos/diferencas-entre-get-e-post?srsltid=AfmBOoo3pPjPT2Gni8FKZ2bx6klsqx8dlTkTYOKScZoZXcCZXzcKkgDR)
-- ChatGPT, ClaudeAI e Google Gemini para apoio na organização estrutural do projeto, dúvidas e sugestões de melhoria. 
+- ChatGPT, ClaudeAI e Google Gemini para apoio na organização estrutural do projeto e para tirar dúvidas pontuais sobre sintaxe e boas práticas. 
 ---
